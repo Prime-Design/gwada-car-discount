@@ -1,0 +1,106 @@
+/* Conteneur parent pour centrer le formulaire */
+.login-page {
+    display: flex;
+    justify-content: center; /* Centrage horizontal */
+    align-items: center; /* Centrage vertical */
+    min-height: 100vh; /* Prend toute la hauteur de la fenêtre */
+    background-color: #003d4d; /* Arrière-plan principal */
+    margin-top: 30px;
+}
+
+/* Formulaire de connexion */
+.login-container {
+    background-color: #004c5c; /* Fond du formulaire */
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    text-align: center;
+    position: relative; /* Nécessaire pour un bon placement */
+    z-index: 10;
+}
+
+/* Logo */
+.login-container img {
+    width: 250px;
+    height: 100px;
+    background-color: #f8c21f; /* Couleur jaune */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+}
+
+/* Champs du formulaire */
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    text-align: left;
+    font-size: 0.9rem;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 40px 12px 15px;
+    border-radius: 10px;
+    border: none;
+    background: #ffffff;
+    font-size: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-group input:focus {
+    outline: none;
+    box-shadow: 0 0 8px #f8c21f;
+}
+
+.form-group i {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    color: #003d4d;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* Bouton de connexion */
+.login-button {
+    background-color: #f8c21f;
+    color: #003d4d;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-button:hover {
+    background-color: #e0b31e;
+}
+
+/* Pied de page du formulaire */
+.login-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+.login-footer a {
+    color: #f8c21f;
+    text-decoration: none;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}

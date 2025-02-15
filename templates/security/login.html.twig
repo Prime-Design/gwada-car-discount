@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<div class="login-page">
+    <div class="login-container">
+        <form action="{{ path('app_login') }}" method="POST">
+            <h2>Connexion</h2>
+            
+            {% if error %}
+                <div class="alert alert-danger">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="email">Adresse Email</label>
+                <input type="email" id="email" name="email" value="{{ last_username }}" placeholder="nom d'utilisateur@gmail.com" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <div class="password-container">
+                    <input type="password" id="password" name="password" placeholder="Mot de passe" required>
+                    <button type="button" id="togglePassword" class="toggle-password">👁️</button>
+                </div>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <button type="submit" class="login-button">Se connecter</button>
+        </form>
+        <div class="login-footer">
+            <a href="{{ path('forgotten_password') }}">Mot de passe oublié ?</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        let passwordField = document.getElementById('password');
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+        } else {
+            passwordField.type = 'password';
+        }
+    });
+</script>
+
+<style>
+    .password-container {
+        display: flex;
+        align-items: center;
+    }
+    .toggle-password {
+        background: none;
+        border: none;
+        cursor: pointer;
+        margin-left: 10px;
+        font-size: 1.2em;
+    }
+</style>
+{% endblock %}

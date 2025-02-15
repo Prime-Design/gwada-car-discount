@@ -1,0 +1,95 @@
+/* Personnalisation du bandeau de consentement avec un design plus professionnel */
+#tarteaucitronRoot #tarteaucitronAlertBig {
+    background: #002B3F !important; /* Bleu foncé plus élégant */
+    color: #FFFFFF !important;
+    font-size: 18px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+    font-weight: 500;
+}
+
+/* Personnalisation des boutons avec un effet moderne */
+#tarteaucitronRoot button.tarteaucitronCTAButton {
+    background: linear-gradient(135deg, #FFC107 0%, #E0A800 100%) !important;
+    color: #003B4F !important;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 24px;
+    border-radius: 30px;
+    border: none;
+    transition: transform 0.2s ease-in-out, background 0.3s ease-in-out;
+}
+
+#tarteaucitronRoot button.tarteaucitronCTAButton:hover {
+    background: linear-gradient(135deg, #E0A800 0%, #D19A00 100%) !important;
+    transform: scale(1.05);
+}
+
+/* Personnalisation de la fenêtre modale */
+#tarteaucitronRoot #tarteaucitron {
+    background: #002B3F !important;
+    color: #FFFFFF !important;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+#tarteaucitronRoot #tarteaucitron .tarteaucitronName {
+    color: #FFC107 !important;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Bouton de fermeture moderne */
+#tarteaucitronRoot button#tarteaucitronClosePanel {
+    background: transparent;
+    color: #FFC107;
+    font-size: 24px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+#tarteaucitronRoot button#tarteaucitronClosePanel:hover {
+    transform: rotate(90deg);
+}
+
+/* Liens améliorés */
+#tarteaucitronRoot a {
+    color: #FFC107 !important;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+#tarteaucitronRoot a:hover {
+    text-decoration: underline;
+}
+
+/* Meilleure lisibilité du texte et de la liste des services */
+#tarteaucitronRoot .tarteaucitronTitle {
+    font-size: 20px;
+    font-weight: bold;
+    color: #FFC107;
+    text-transform: uppercase;
+}
+
+#tarteaucitronRoot .tarteaucitronLine {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 12px 0;
+}
+
+/* Icône de gestion des cookies modernisée */
+#tarteaucitronIcon {
+    background: linear-gradient(135deg, #FFC107 0%, #E0A800 100%) !important;
+    color: #003B4F !important;
+    padding: 12px;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+

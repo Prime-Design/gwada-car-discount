@@ -1,0 +1,356 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ slug|capitalize }}
+	- Gwada Car Discount
+{% endblock %}
+
+
+{% block body %}
+	<div class="container mt-5">
+		<h1 class="text-center my-5 accueil">Trouvez votre futur véhicule, selon vos besoins</h1>
+
+		<!-- Formulaire de filtre -->
+		<form method="GET" action="{{ path('app_post') }}" class=" text-white p-4  mb-5" style="background: #003a4b;">
+			<h2 class="text-center mb-4">Nos véhicules d'occasion</h2>
+			<div class="row g-3">
+				<div class="col-12 col-md-4">
+					<select name="marque" class="form-select">
+						<option value="">-- Marque --</option>
+						{% for marque in marques %}
+							<option value="{{ marque.marque }}" {% if app.request.get('marque') == marque.marque %} selected {% endif %}>{{ marque.marque }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="col-12 col-md-4">
+					<select name="modele" class="form-select">
+						<option value="">-- Modèle --</option>
+						{% for modele in modeles %}
+							<option value="{{ modele.modele }}" {% if app.request.get('modele') == modele.modele %} selected {% endif %}>{{ modele.modele }}</option>
+						{% endfor %}
+					</select>
+				</div>
+
+				<div class="col-12 col-md-4">
+					<select name="energie" class="form-select">
+						<option value="">-- Énergie --</option>
+						{% for energie in energies %}
+							<option value="{{ energie.energie }}" {% if app.request.get('energie') == energie.energie %} selected {% endif %}>{{ energie.energie }}</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+
+			<div class="row mt-3">
+				<div class="col-md-6">
+					<label for="prix_min">Prix minimum (€)</label>
+					<input id="prix_min" type="number" name="prix_min" class="form-control" value="{{ app.request.get('prix_min') }}">
+				</div>
+				<div class="col-md-6">
+					<label for="prix_max">Prix maximum (€)</label>
+					<input id="prix_max" type="number" name="prix_max" class="form-control" value="{{ app.request.get('prix_max') }}">
+				</div>
+			</div>
+			<div class="row mt-3">
+				<div class="col text-center">
+					<button type="submit" class="btn btn-warning px-5 py-2 mt-2">
+						Rechercher
+					</button>
+				</div>
+			</div>
+		</form>
+
+		<!-- Liste des annonces -->
+		<div class="row" id="annonces">
+			{% if annonces is empty %}
+				<p class="text-center">Aucune annonce ne correspond à vos critères.</p>
+			{% else %}
+				{% for annonce in annonces %}
+					<div class="col-12 col-sm-6 col-md-4 mb-4">
+						<div
+							class="card h-100 shadow-sm">
+							<!-- Carrousel pour les images -->
+							<div id="carousel{{ annonce.id }}" class="carousel slide" data-bs-ride="carousel">
+								<div class="carousel-inner">
+									<div class="carousel-item active">
+										<a href="#" data-bs-toggle="modal" data-bs-target="#imageModal{{ annonce.id }}">
+											<img src="/divers/images/{{ annonce.image }}" class="d-block w-100" alt="Image principale de {{ annonce.marque }}" style="height: 250px; object-fit: cover;">
+										</a>
+									</div>
+									{% for i in 2..5 %}
+										{% set imageField = 'image' ~ i %}
+										{% if attribute(annonce, imageField) %}
+											<div class="carousel-item">
+												<a href="#" data-bs-toggle="modal" data-bs-target="#imageModal{{ annonce.id }}-{{ i }}">
+													<img src="/divers/images/{{ attribute(annonce, imageField) }}" class="d-block w-100" alt="Image secondaire {{ i }}" style="height: 250px; object-fit: cover;">
+												</a>
+											</div>
+										{% endif %}
+									{% endfor %}
+								</div>
+								<button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ annonce.id }}" data-bs-slide="prev">
+									<span class="carousel-control-prev-icon"></span>
+									<span class="visually-hidden">Previous</span>
+								</button>
+								<button class="carousel-control-next" type="button" data-bs-target="#carousel{{ annonce.id }}" data-bs-slide="next">
+									<span class="carousel-control-next-icon"></span>
+									<span class="visually-hidden">Next</span>
+								</button>
+							</div>
+
+							<!-- Détails de la carte -->
+							<div class="card-body">
+								<table class="table table-borderless">
+									<tbody>
+										<tr>
+											<td>
+												<i class="fa-solid fa-calendar"></i>
+												<strong>Mise en circulation</strong>
+												<span>{{ annonce.miseEnCirculation|date('d/m/Y') }}</span>
+											</td>
+											<td>
+												<i class="fa-solid fa-road"></i>
+												<strong>Kilomètres</strong>
+												<span>{{ annonce.kilometres|number_format(0, '.', ' ') }}
+													km</span>
+											</td>
+											<td>
+												<i class="fa-solid fa-gas-pump"></i>
+												<strong>Énergie</strong>
+												<span>{{ annonce.energie }}</span>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<i class="fa-solid fa-gears"></i>
+												<strong>Type de boîte</strong>
+												<span>{{ annonce.typeDeBoite }}</span>
+											</td>
+											<td>
+												<i class="fa-solid fa-horse"></i>
+												<strong>Puissance</strong>
+												<span>{{ annonce.puissance }}</span>
+											</td>
+											<td>
+												<i class="fa-solid fa-user"></i>
+												<strong>Places</strong>
+												<span>{{ annonce.places }}</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+
+
+								<h5 class="card-title">{{ annonce.marque }}
+									{{ annonce.modele }}</h5>
+								<p class="text-muted">{{ annonce.finition }}</p>
+								<p>Consommation (combinée) :
+									<strong class="text-dark">{{ annonce.consommation }}</strong>
+								</p>
+								<p>
+									Classe CO₂ :
+									<span class="co2-badge
+																						        {% if annonce.classeCo2 == 'A' %}co2-a
+																						        {% elseif annonce.classeCo2 == 'B' %}co2-b
+																						        {% elseif annonce.classeCo2 == 'C' %}co2-c
+																						        {% elseif annonce.classeCo2 == 'D' %}co2-d
+																						        {% elseif annonce.classeCo2 == 'E' %}co2-e
+																						        {% elseif annonce.classeCo2 == 'F' %}co2-f
+																						        {% elseif annonce.classeCo2 == 'G' %}co2-g{% endif %}">
+										{{ annonce.classeCo2 }}
+									</span>
+								</p>
+							</div>
+
+							<!-- Bouton pour équipements -->
+							<div class="card-footer d-flex justify-content-between">
+								<span>
+									<strong style="color: black;">{{ annonce.prix|number_format(0, '.', ' ') }}
+										€</strong>
+								</span>
+
+								<button class="btn btn-sm btn-warning" data-bs-toggle="collapse" data-bs-target="#equipments-{{ annonce.id }}">
+									Équipements
+								</button>
+							</div>
+							<!-- Liste des équipements -->
+							<div id="equipments-{{ annonce.id }}" class="collapse mt-3">
+								<ul class="list-group list-group-flush">
+									{% for equipement in annonce.equipement %}
+										<li class="list-group-item d-flex align-items-center" style="border-left: 4px solid #fbb034; padding: 10px;">
+											<i class="fa-solid fa-check-circle me-2 text-success"></i>
+											<span style="font-size: 14px; color: #555;">{{ equipement }}</span>
+										</li>
+									{% endfor %}
+								</ul>
+							</div>
+
+						</div>
+					</div>
+
+					<!-- Modale pour les images -->
+					<div class="modal fade" id="imageModal{{ annonce.id }}" tabindex="-1" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered modal-lg">
+							<div class="modal-content">
+								<div class="modal-body p-0">
+									<img src="/divers/images/{{ annonce.image }}" class="img-fluid" data-bs-dismiss="modal" style="cursor: pointer;">
+								</div>
+							</div>
+						</div>
+					</div>
+					{% for i in 2..5 %}
+						{% set imageField = 'image' ~ i %}
+						{% if attribute(annonce, imageField) %}
+							<div class="modal fade" id="imageModal{{ annonce.id }}-{{ i }}" tabindex="-1" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered modal-lg">
+									<div class="modal-content">
+										<div class="modal-body p-0">
+											<img src="/divers/images/{{ attribute(annonce, imageField) }}" class="img-fluid" data-bs-dismiss="modal" style="cursor: pointer;">
+										</div>
+									</div>
+								</div>
+							</div>
+						{% endif %}
+					{% endfor %}
+
+				{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+
+{% if totalPages > 1 %}
+    <nav aria-label="Pagination">
+        <ul class="pagination justify-content-center mt-4">
+            {% if currentPage > 1 %}
+                <li class="page-item">
+                    <a class="page-link btn text-dark" href="{{ path('app_post', { page: currentPage - 1 }) }}">&laquo; Précédent</a>
+                </li>
+            {% endif %}
+
+            {% for i in 1..totalPages %}
+                <li class="page-item {% if i == currentPage %}active{% endif %}">
+                    <a class="page-link btn text-dark" href="{{ path('app_post', { page: i }) }}">{{ i }}</a>
+                </li>
+            {% endfor %}
+
+            {% if currentPage < totalPages %}
+                <li class="page-item">
+                    <a class="page-link btn text-dark" href="{{ path('app_post', { page: currentPage + 1 }) }}">Suivant &raquo;</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
+
+
+
+
+	<!-- Section de contact -->
+	<section style="padding: 50px 0; display: flex; justify-content: center;" id="contact">
+		<div style="background-image: url('/divers/images/voiture.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 30px; max-width: 700px; width: 100%; border-radius: 8px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); background-color: rgba(255, 255, 255, 0.85); background-blend-mode: lighten;">
+			<h3 style="text-align: center; font-size: 24px; margin-bottom: 10px; color: #333;">Contactez-nous</h3>
+			<p style="text-align: center; font-size: 16px; color: #555; margin-bottom: 20px;">Veuillez remplir le formulaire ci-dessous et nous vous répondrons rapidement.</p>
+			{% if formContact is not defined %}
+				<p style="color: red; text-align: center;">⚠ Erreur : le formulaire n'est pas disponible.</p>
+			{% else %}
+				<div class="container mt-5">
+					<div class="card shadow p-4" style="background: rgba(255, 255, 255, 0.33); border-radius: 10px;">
+
+
+						<form method="POST" action="{{ path('app_post') }}">
+							{{ form_start(formContact) }}
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										{{ form_label(formContact.firstname, 'Votre Prénom', {'label_attr': {'class': 'form-label'}}) }}
+										{{ form_widget(formContact.firstname, {'attr': {'class': 'form-control'}}) }}
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										{{ form_label(formContact.lastname, 'Votre Nom', {'label_attr': {'class': 'form-label'}}) }}
+										{{ form_widget(formContact.lastname, {'attr': {'class': 'form-control'}}) }}
+									</div>
+								</div>
+							</div>
+
+							<div class="mb-3">
+								{{ form_label(formContact.email, 'Votre Email', {'label_attr': {'class': 'form-label'}}) }}
+								{{ form_widget(formContact.email, {'attr': {'class': 'form-control'}}) }}
+							</div>
+
+							<div class="mb-3">
+								{{ form_label(formContact.message, 'Message', {'label_attr': {'class': 'form-label'}}) }}
+								{{ form_widget(formContact.message, {'attr': {'class': 'form-control', 'rows': '4'}}) }}
+							</div>
+
+							<div class="text-center">
+								<button type="submit" class="btn btn-warning px-4 py-2">
+									✉️ Envoyer
+								</button>
+							</div>
+
+							{{ form_end(formContact) }}
+						</form>
+					</div>
+
+					{% for label, messages in app.flashes %}
+						{% for message in messages %}
+							<div class="alert alert-{{ label }} mt-3 text-center" role="alert">
+								{{ message }}
+							</div>
+						{% endfor %}
+					{% endfor %}
+				</div>
+
+			{% endif %}
+
+			<!-- Messages Flash -->
+			{% for label, messages in app.flashes %}
+				{% for message in messages %}
+					<div class="alert alert-{{ label }} mt-3" role="alert">
+						{{ message }}
+					</div>
+				{% endfor %}
+			{% endfor %}
+		</section>
+
+
+		<!-- Affichage des messages flash -->
+		{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-{{ label }} mt-3" role="alert">
+					{{ message }}
+				</div>
+			{% endfor %}
+		{% endfor %}
+
+	</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+const form = document.querySelector('form');
+const inputs = form.querySelectorAll('input, select');
+
+// Ajoutez un écouteur d'événement sur tous les champs du formulaire
+inputs.forEach(input => {
+input.addEventListener('input', function () {
+let allEmpty = true;
+
+// Vérifiez si tous les champs sont vides
+inputs.forEach(field => {
+if (field.value.trim() !== '') {
+allEmpty = false;
+}
+});
+
+// Si tous les champs sont vides, soumettez le formulaire
+if (allEmpty) {
+form.submit();
+}
+});
+});
+});
+	</script>
+{% endblock %}

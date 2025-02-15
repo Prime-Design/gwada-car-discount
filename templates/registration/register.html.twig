@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}S'inscrire{% endblock %}
+
+{% block body %}
+<div class="login-page">
+    <div class="login-container">
+
+        <h1 style="color: #ffffff;">Créer un compte</h1>
+
+        {{ form_start(registrationForm) }}
+            <div class="form-group">
+                {{ form_label(registrationForm.email, 'Adresse Email') }}
+                {{ form_widget(registrationForm.email, { 'attr': { 'placeholder': "nom d'utilisateur@gmail.com", 'class': 'form-control' } }) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(registrationForm.firstname, 'Prénom') }}
+                {{ form_widget(registrationForm.firstname, { 'attr': { 'placeholder': "Prénom", 'class': 'form-control' } }) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(registrationForm.lastname, 'Nom') }}
+                {{ form_widget(registrationForm.lastname, { 'attr': { 'placeholder': "Nom", 'class': 'form-control' } }) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(registrationForm.plainPassword, 'Mot de passe') }}
+                {{ form_widget(registrationForm.plainPassword, { 'attr': { 'placeholder': 'Mot de passe', 'class': 'form-control' } }) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(registrationForm.agreeTerms, null) }}
+                {{ form_widget(registrationForm.agreeTerms) }}
+            </div>
+
+            <button type="submit" class="login-button">S'inscrire</button>
+        {{ form_end(registrationForm) }}
+
+        <div class="login-footer">
+            <a href="/login">Déjà un compte ? Connexion</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
