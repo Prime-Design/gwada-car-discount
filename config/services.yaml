@@ -9,11 +9,7 @@ services:
         arguments:
             $jwtSecret: '%app.jwtsecret%'
 
-    # Définition explicite de ImageUploader avec injection de `upload_directory`
-    App\Service\ImageUploader:
-        arguments:
-            $uploadDirectory: '%upload_directory%'
-        public: true  # <-- Ajouté pour tester l'accès direct à ce service
+
 
     # Configuration par défaut des services
     _defaults:

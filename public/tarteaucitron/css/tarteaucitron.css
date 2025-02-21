@@ -8,23 +8,52 @@
     border-radius: 8px;
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
     font-weight: 500;
+    z-index: 9998; /* S'assure qu'il ne couvre pas d'autres éléments */
 }
 
-/* Personnalisation des boutons avec un effet moderne */
+/* Désactiver l'interaction de Tarteaucitron pour éviter qu'il bloque le clic */
+#tarteaucitronRoot {
+    pointer-events: none !important;
+}
+
+/* Réactiver les interactions pour les boutons */
+#tarteaucitronRoot button {
+    pointer-events: auto !important;
+}
+
+/* Personnalisation des boutons avec un effet moderne et compact */
 #tarteaucitronRoot button.tarteaucitronCTAButton {
     background: linear-gradient(135deg, #FFC107 0%, #E0A800 100%) !important;
     color: #003B4F !important;
-    font-size: 16px;
+    font-size: 10px; /* Réduction de la taille du texte */
     font-weight: bold;
-    padding: 12px 24px;
-    border-radius: 30px;
+    border-radius: 10px; /* Arrondi ajusté */
     border: none;
     transition: transform 0.2s ease-in-out, background 0.3s ease-in-out;
+    position: relative;
+    z-index: 9999; /* S'assure que les boutons restent accessibles */
 }
 
+/* Effet au survol */
 #tarteaucitronRoot button.tarteaucitronCTAButton:hover {
     background: linear-gradient(135deg, #E0A800 0%, #D19A00 100%) !important;
-    transform: scale(1.05);
+    transform: scale(1.03);
+}
+
+/* Bouton "Personnaliser" avec une meilleure harmonie */
+#tarteaucitronRoot button#tarteaucitronPersonalize {
+    background: white !important;
+    color: #003B4F !important;
+    border: 2px solid #E0A800 !important;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 20px;
+    transition: background 0.3s ease-in-out;
+}
+
+#tarteaucitronRoot button#tarteaucitronPersonalize:hover {
+    background: #E0A800 !important;
+    color: white !important;
 }
 
 /* Personnalisation de la fenêtre modale */
@@ -36,10 +65,10 @@
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4);
 }
 
-#tarteaucitronRoot #tarteaucitron .tarteaucitronName {
-    color: #FFC107 !important;
-    font-weight: bold;
-    font-size: 18px;
+/* Éviter que Tarteaucitron recouvre le formulaire */
+#contact {
+    position: relative;
+    z-index: 99999 !important;
 }
 
 /* Bouton de fermeture moderne */
@@ -91,5 +120,3 @@
     cursor: pointer;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
-
-

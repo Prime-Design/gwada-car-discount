@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://gwadacardiscount.primeprojet.fr/sitemap.xml

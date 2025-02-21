@@ -4,8 +4,8 @@
 			class="row align-items-center">
 			<!-- Logo Section -->
 			<div class="col-12 col-md-4 text-center text-md-start mb-3 mb-md-0">
-				<a href="#" class="logo">
-					<img src="divers/images/logo.png" alt="Logo" class="img-fluid rounded shadow" style="max-width: 250px;">
+				<a href="{{ path('app_post') }}" class="logo">
+					<img src="{{ asset('divers/images/logo.png') }}" alt="Logo" class="img-fluid rounded shadow" style="max-width: 250px;" loading="lazy">
 				</a>
 			</div>
 
@@ -22,10 +22,8 @@
 
 			<!-- Social Icons -->
 			<div class="col-12 col-md-4 text-center text-md-end">
-				<a href="https://facebook.com" target="_blank" class="text-white text-decoration-none mx-2 fs-4">
-					<i class="fab fa-facebook"></i>
-				</a>
-				<a href="https://instagram.com" target="_blank" class="text-white text-decoration-none mx-2 fs-4">
+
+				<a href="https://www.instagram.com/gwadacardiscount" target="_blank" class="text-white text-decoration-none mx-2 fs-4">
 					<i class="fab fa-instagram"></i>
 				</a>
 			</div>
@@ -41,3 +39,25 @@
 
 	</div>
 </footer>
+<script type="text/javascript">
+	tarteaucitron.services.instagram = {
+"key": "instagram",
+"type": "social",
+"name": "Instagram",
+"needConsent": true,
+"uri": "https://instagram.com",
+"js": function () {
+tarteaucitron.fallback(['instagram-container'], function (x) {
+var frame = document.createElement('iframe');
+frame.src = 'https://www.instagram.com/embed.js';
+frame.width = "600";
+frame.height = "400";
+x.appendChild(frame);
+});
+},
+"fallback": function () {
+var id = 'instagram-container';
+document.getElementById(id).innerHTML = 'Instagram contenu bloqué. <a href="https://www.instagram.com/gwadacardiscount" target="_blank" rel="noopener noreferrer">Accéder à Instagram</a> ou <a href="#" onclick="tarteaucitron.userInterface.openPanel(); return false;">Accepter les cookies</a>';
+}
+};
+</script>

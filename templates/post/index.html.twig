@@ -11,11 +11,12 @@
 		<h1 class="text-center my-5 accueil">Trouvez votre futur véhicule, selon vos besoins</h1>
 
 		<!-- Formulaire de filtre -->
-		<form method="GET" action="{{ path('app_post') }}" class=" text-white p-4  mb-5" style="background: #003a4b;">
+		<form method="GET" action="{{ path('app_post') }}" class="text-white p-4 mb-5">
 			<h2 class="text-center mb-4">Nos véhicules d'occasion</h2>
 			<div class="row g-3">
 				<div class="col-12 col-md-4">
-					<select name="marque" class="form-select">
+					<label for="marque" class="visually-hidden">Marque</label>
+					<select name="marque" id="marque" class="form-select" aria-label="Sélectionner une marque">
 						<option value="">-- Marque --</option>
 						{% for marque in marques %}
 							<option value="{{ marque.marque }}" {% if app.request.get('marque') == marque.marque %} selected {% endif %}>{{ marque.marque }}</option>
@@ -23,16 +24,17 @@
 					</select>
 				</div>
 				<div class="col-12 col-md-4">
-					<select name="modele" class="form-select">
+					<label for="modele" class="visually-hidden">Modèle</label>
+					<select name="modele" id="modele" class="form-select" aria-label="Sélectionner un modèle">
 						<option value="">-- Modèle --</option>
 						{% for modele in modeles %}
 							<option value="{{ modele.modele }}" {% if app.request.get('modele') == modele.modele %} selected {% endif %}>{{ modele.modele }}</option>
 						{% endfor %}
 					</select>
 				</div>
-
 				<div class="col-12 col-md-4">
-					<select name="energie" class="form-select">
+					<label for="energie" class="visually-hidden">Énergie</label>
+					<select name="energie" id="energie" class="form-select" aria-label="Sélectionner un type d'énergie">
 						<option value="">-- Énergie --</option>
 						{% for energie in energies %}
 							<option value="{{ energie.energie }}" {% if app.request.get('energie') == energie.energie %} selected {% endif %}>{{ energie.energie }}</option>
@@ -40,15 +42,14 @@
 					</select>
 				</div>
 			</div>
-
 			<div class="row mt-3">
 				<div class="col-md-6">
-					<label for="prix_min">Prix minimum (€)</label>
-					<input id="prix_min" type="number" name="prix_min" class="form-control" value="{{ app.request.get('prix_min') }}">
+					<label for="prix_min" class="form-label">Prix minimum (€)</label>
+					<input id="prix_min" type="number" name="prix_min" class="form-control" value="{{ app.request.get('prix_min') }}" placeholder="Min" min="0">
 				</div>
 				<div class="col-md-6">
-					<label for="prix_max">Prix maximum (€)</label>
-					<input id="prix_max" type="number" name="prix_max" class="form-control" value="{{ app.request.get('prix_max') }}">
+					<label for="prix_max" class="form-label">Prix maximum (€)</label>
+					<input id="prix_max" type="number" name="prix_max" class="form-control" value="{{ app.request.get('prix_max') }}" placeholder="Max" min="0">
 				</div>
 			</div>
 			<div class="row mt-3">
@@ -71,23 +72,29 @@
 							class="card h-100 shadow-sm">
 							<!-- Carrousel pour les images -->
 							<div id="carousel{{ annonce.id }}" class="carousel slide" data-bs-ride="carousel">
-								<div class="carousel-inner">
+								<div
+									class="carousel-inner">
+									<!-- Image principale -->
 									<div class="carousel-item active">
-										<a href="#" data-bs-toggle="modal" data-bs-target="#imageModal{{ annonce.id }}">
-											<img src="/divers/images/{{ annonce.image }}" class="d-block w-100" alt="Image principale de {{ annonce.marque }}" style="height: 250px; object-fit: cover;">
+										<a href="{{ asset('divers/images/' ~ annonce.image) }}" data-bs-toggle="modal" data-bs-target="#imageModal{{ annonce.id }}">
+											<img src="{{ asset('divers/images/' ~ annonce.image) }}" class="d-block w-100" alt="Image principale de {{ annonce.marque }}" style="height: 250px; object-fit: cover;" loading="lazy">
 										</a>
 									</div>
+
+									<!-- Images secondaires -->
 									{% for i in 2..5 %}
 										{% set imageField = 'image' ~ i %}
 										{% if attribute(annonce, imageField) %}
 											<div class="carousel-item">
-												<a href="#" data-bs-toggle="modal" data-bs-target="#imageModal{{ annonce.id }}-{{ i }}">
-													<img src="/divers/images/{{ attribute(annonce, imageField) }}" class="d-block w-100" alt="Image secondaire {{ i }}" style="height: 250px; object-fit: cover;">
+												<a href="{{ asset('divers/images/' ~ attribute(annonce, imageField)) }}" data-bs-toggle="modal" data-bs-target="#imageModal{{ annonce.id }}-{{ i }}">
+													<img src="{{ asset('divers/images/' ~ attribute(annonce, imageField)) }}" class="d-block w-100" alt="Image secondaire {{ i }}" style="height: 250px; object-fit: cover;" loading="lazy">
 												</a>
 											</div>
 										{% endif %}
 									{% endfor %}
 								</div>
+
+								<!-- Boutons de navigation -->
 								<button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ annonce.id }}" data-bs-slide="prev">
 									<span class="carousel-control-prev-icon"></span>
 									<span class="visually-hidden">Previous</span>
@@ -98,41 +105,42 @@
 								</button>
 							</div>
 
+
 							<!-- Détails de la carte -->
 							<div class="card-body">
 								<table class="table table-borderless">
 									<tbody>
 										<tr>
 											<td>
-												<i class="fa-solid fa-calendar"></i>
+												<i class="fa-solid fa-calendar" title="Mise en circulation" aria-hidden="true"></i>
 												<strong>Mise en circulation</strong>
 												<span>{{ annonce.miseEnCirculation|date('d/m/Y') }}</span>
 											</td>
 											<td>
-												<i class="fa-solid fa-road"></i>
+												<i class="fa-solid fa-road" title="Kilométrage" aria-hidden="true"></i>
 												<strong>Kilomètres</strong>
 												<span>{{ annonce.kilometres|number_format(0, '.', ' ') }}
 													km</span>
 											</td>
 											<td>
-												<i class="fa-solid fa-gas-pump"></i>
+												<i class="fa-solid fa-gas-pump" title="Type de carburant" aria-hidden="true"></i>
 												<strong>Énergie</strong>
 												<span>{{ annonce.energie }}</span>
 											</td>
 										</tr>
 										<tr>
 											<td>
-												<i class="fa-solid fa-gears"></i>
+												<i class="fa-solid fa-gears" title="Type de boîte de vitesses" aria-hidden="true"></i>
 												<strong>Type de boîte</strong>
 												<span>{{ annonce.typeDeBoite }}</span>
 											</td>
 											<td>
-												<i class="fa-solid fa-horse"></i>
+												<i class="fa-solid fa-horse" title="Puissance du moteur" aria-hidden="true"></i>
 												<strong>Puissance</strong>
 												<span>{{ annonce.puissance }}</span>
 											</td>
 											<td>
-												<i class="fa-solid fa-user"></i>
+												<i class="fa-solid fa-user" title="Nombre de places" aria-hidden="true"></i>
 												<strong>Places</strong>
 												<span>{{ annonce.places }}</span>
 											</td>
@@ -140,46 +148,45 @@
 									</tbody>
 								</table>
 
-
-								<h5 class="card-title">{{ annonce.marque }}
-									{{ annonce.modele }}</h5>
+								<h3 class="card-title">{{ annonce.marque }}
+									{{ annonce.modele }}</h3>
 								<p class="text-muted">{{ annonce.finition }}</p>
-								<p>Consommation (combinée) :
+
+								<p>
+									Consommation (combinée) :
 									<strong class="text-dark">{{ annonce.consommation }}</strong>
 								</p>
+
 								<p>
 									Classe CO₂ :
-									<span class="co2-badge
-																						        {% if annonce.classeCo2 == 'A' %}co2-a
-																						        {% elseif annonce.classeCo2 == 'B' %}co2-b
-																						        {% elseif annonce.classeCo2 == 'C' %}co2-c
-																						        {% elseif annonce.classeCo2 == 'D' %}co2-d
-																						        {% elseif annonce.classeCo2 == 'E' %}co2-e
-																						        {% elseif annonce.classeCo2 == 'F' %}co2-f
-																						        {% elseif annonce.classeCo2 == 'G' %}co2-g{% endif %}">
+									<span class="co2-badge co2-{{ annonce.classeCo2|lower }}">
 										{{ annonce.classeCo2 }}
 									</span>
 								</p>
 							</div>
 
+
 							<!-- Bouton pour équipements -->
 							<div class="card-footer d-flex justify-content-between">
 								<span>
-									<strong style="color: black;">{{ annonce.prix|number_format(0, '.', ' ') }}
-										€</strong>
+									<strong class="text-dark">
+										{{ annonce.prix|number_format(0, '.', ' ') }}
+										€
+									</strong>
 								</span>
 
-								<button class="btn btn-sm btn-warning" data-bs-toggle="collapse" data-bs-target="#equipments-{{ annonce.id }}">
+								<button class="btn btn-sm btn-warning" data-bs-toggle="collapse" data-bs-target="#equipments-{{ annonce.id }}" aria-controls="equipments-{{ annonce.id }}" aria-expanded="false" title="Afficher les équipements">
 									Équipements
 								</button>
 							</div>
+
 							<!-- Liste des équipements -->
 							<div id="equipments-{{ annonce.id }}" class="collapse mt-3">
 								<ul class="list-group list-group-flush">
 									{% for equipement in annonce.equipement %}
-										<li class="list-group-item d-flex align-items-center" style="border-left: 4px solid #fbb034; padding: 10px;">
-											<i class="fa-solid fa-check-circle me-2 text-success"></i>
-											<span style="font-size: 14px; color: #555;">{{ equipement }}</span>
+										<li class="list-group-item d-flex align-items-center border-start border-warning border-4 py-2">
+											<i class="fa-solid fa-check-circle me-2 text-success" loading="lazy"></i>
+											<span class="text-secondary small">{{ equipement }}</span>
 										</li>
 									{% endfor %}
 								</ul>
@@ -188,24 +195,26 @@
 						</div>
 					</div>
 
-					<!-- Modale pour les images -->
-					<div class="modal fade" id="imageModal{{ annonce.id }}" tabindex="-1" aria-hidden="true">
+					<!-- Modale pour l'image principale -->
+					<div class="modal fade" id="imageModal{{ annonce.id }}" tabindex="-1" aria-hidden="true" role="dialog" aria-labelledby="imageModalLabel{{ annonce.id }}">
 						<div class="modal-dialog modal-dialog-centered modal-lg">
 							<div class="modal-content">
 								<div class="modal-body p-0">
-									<img src="/divers/images/{{ annonce.image }}" class="img-fluid" data-bs-dismiss="modal" style="cursor: pointer;">
+									<img src="{{ asset('divers/images/' ~ annonce.image) }}" class="img-fluid" alt="Aperçu de {{ annonce.marque }} - Image principale" data-bs-dismiss="modal" title="Fermer l’image" loading="lazy">
 								</div>
 							</div>
 						</div>
 					</div>
+
+					<!-- Modales pour les images secondaires -->
 					{% for i in 2..5 %}
 						{% set imageField = 'image' ~ i %}
 						{% if attribute(annonce, imageField) %}
-							<div class="modal fade" id="imageModal{{ annonce.id }}-{{ i }}" tabindex="-1" aria-hidden="true">
+							<div class="modal fade" id="imageModal{{ annonce.id }}-{{ i }}" tabindex="-1" aria-hidden="true" role="dialog" aria-labelledby="imageModalLabel{{ annonce.id }}-{{ i }}">
 								<div class="modal-dialog modal-dialog-centered modal-lg">
 									<div class="modal-content">
 										<div class="modal-body p-0">
-											<img src="/divers/images/{{ attribute(annonce, imageField) }}" class="img-fluid" data-bs-dismiss="modal" style="cursor: pointer;">
+											<img src="{{ asset('divers/images/' ~ attribute(annonce, imageField)) }}" class="img-fluid" alt="Aperçu de {{ annonce.marque }} - Image {{ i }}" data-bs-dismiss="modal" title="Fermer l’image" loading="lazy">
 										</div>
 									</div>
 								</div>
@@ -218,44 +227,46 @@
 		</div>
 	</div>
 
-{% if totalPages > 1 %}
-    <nav aria-label="Pagination">
-        <ul class="pagination justify-content-center mt-4">
-            {% if currentPage > 1 %}
-                <li class="page-item">
-                    <a class="page-link btn text-dark" href="{{ path('app_post', { page: currentPage - 1 }) }}">&laquo; Précédent</a>
-                </li>
-            {% endif %}
+	{% if totalPages > 1 %}
+		<nav aria-label="Pagination">
+			<ul class="pagination justify-content-center mt-4">
+				{% if currentPage > 1 %}
+					<li class="page-item">
+						<a class="page-link text-dark bg-warning" href="{{ path('app_post', { page: currentPage - 1 }) }}" rel="prev">
+							&laquo; Précédent
+						</a>
+					</li>
+				{% endif %}
 
-            {% for i in 1..totalPages %}
-                <li class="page-item {% if i == currentPage %}active{% endif %}">
-                    <a class="page-link btn text-dark" href="{{ path('app_post', { page: i }) }}">{{ i }}</a>
-                </li>
-            {% endfor %}
+				{% for i in 1..totalPages %}
+					<li class="page-item {% if i == currentPage %}active{% endif %}">
+						<a class="page-link {% if i == currentPage %}bg-primary text-white{% else %}bg-warning text-dark{% endif %}" href="{{ path('app_post', { page: i }) }}" {% if i == currentPage %} aria-current="page" {% endif %}>
+							{{ i }}
+						</a>
+					</li>
+				{% endfor %}
 
-            {% if currentPage < totalPages %}
-                <li class="page-item">
-                    <a class="page-link btn text-dark" href="{{ path('app_post', { page: currentPage + 1 }) }}">Suivant &raquo;</a>
-                </li>
-            {% endif %}
-        </ul>
-    </nav>
-{% endif %}
-
-
-
-
+				{% if currentPage < totalPages %}
+					<li class="page-item">
+						<a class="page-link text-dark bg-warning" href="{{ path('app_post', { page: currentPage + 1 }) }}" rel="next">
+							Suivant &raquo;
+						</a>
+					</li>
+				{% endif %}
+			</ul>
+		</nav>
+	{% endif %}
 	<!-- Section de contact -->
-	<section style="padding: 50px 0; display: flex; justify-content: center;" id="contact">
-		<div style="background-image: url('/divers/images/voiture.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 30px; max-width: 700px; width: 100%; border-radius: 8px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); background-color: rgba(255, 255, 255, 0.85); background-blend-mode: lighten;">
-			<h3 style="text-align: center; font-size: 24px; margin-bottom: 10px; color: #333;">Contactez-nous</h3>
-			<p style="text-align: center; font-size: 16px; color: #555; margin-bottom: 20px;">Veuillez remplir le formulaire ci-dessous et nous vous répondrons rapidement.</p>
-			{% if formContact is not defined %}
-				<p style="color: red; text-align: center;">⚠ Erreur : le formulaire n'est pas disponible.</p>
-			{% else %}
-				<div class="container mt-5">
-					<div class="card shadow p-4" style="background: rgba(255, 255, 255, 0.33); border-radius: 10px;">
+	<section class="py-5 d-flex justify-content-center" id="contact">
+		<div class="contact-container position-relative text-center text-white py-4 px-4  ">
+			<h4 class="fw-bold text-dark">Contactez-nous</h4>
+			<p class="text-muted">Veuillez remplir le formulaire ci-dessous et nous vous répondrons rapidement.</p>
 
+			{% if formContact is not defined %}
+				<p class="text-danger">⚠ Erreur : le formulaire n'est pas disponible.</p>
+			{% else %}
+				<div class="container mt-4">
+					<div class="card shadow p-4  ">
 
 						<form method="POST" action="{{ path('app_post') }}">
 							{{ form_start(formContact) }}
@@ -264,29 +275,29 @@
 								<div class="col-md-6">
 									<div class="mb-3">
 										{{ form_label(formContact.firstname, 'Votre Prénom', {'label_attr': {'class': 'form-label'}}) }}
-										{{ form_widget(formContact.firstname, {'attr': {'class': 'form-control'}}) }}
+										{{ form_widget(formContact.firstname, {'attr': {'class': 'form-control', 'aria-required': 'true'}}) }}
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="mb-3">
 										{{ form_label(formContact.lastname, 'Votre Nom', {'label_attr': {'class': 'form-label'}}) }}
-										{{ form_widget(formContact.lastname, {'attr': {'class': 'form-control'}}) }}
+										{{ form_widget(formContact.lastname, {'attr': {'class': 'form-control', 'aria-required': 'true'}}) }}
 									</div>
 								</div>
 							</div>
 
 							<div class="mb-3">
 								{{ form_label(formContact.email, 'Votre Email', {'label_attr': {'class': 'form-label'}}) }}
-								{{ form_widget(formContact.email, {'attr': {'class': 'form-control'}}) }}
+								{{ form_widget(formContact.email, {'attr': {'class': 'form-control', 'aria-required': 'true', 'aria-describedby': 'emailHelp'}}) }}
 							</div>
 
 							<div class="mb-3">
 								{{ form_label(formContact.message, 'Message', {'label_attr': {'class': 'form-label'}}) }}
-								{{ form_widget(formContact.message, {'attr': {'class': 'form-control', 'rows': '4'}}) }}
+								{{ form_widget(formContact.message, {'attr': {'class': 'form-control', 'rows': '4', 'aria-required': 'true'}}) }}
 							</div>
 
 							<div class="text-center">
-								<button type="submit" class="btn btn-warning px-4 py-2">
+								<button type="submit" class="btn btn-warning px-4 py-2 fw-bold">
 									✉️ Envoyer
 								</button>
 							</div>
@@ -294,42 +305,37 @@
 							{{ form_end(formContact) }}
 						</form>
 					</div>
-
-					{% for label, messages in app.flashes %}
-						{% for message in messages %}
-							<div class="alert alert-{{ label }} mt-3 text-center" role="alert">
-								{{ message }}
-							</div>
-						{% endfor %}
-					{% endfor %}
 				</div>
-
 			{% endif %}
 
 			<!-- Messages Flash -->
 			{% for label, messages in app.flashes %}
 				{% for message in messages %}
-					<div class="alert alert-{{ label }} mt-3" role="alert">
+					<div class="alert alert-{{ label }} mt-3 text-center" role="alert">
 						{{ message }}
 					</div>
 				{% endfor %}
 			{% endfor %}
-		</section>
+		</div>
+	</section>
+
+	<style>
+		.contact-container {
+			background: url('/divers/images/voiture.jpg') center/cover no-repeat;
+			max-width: 700px;
+			width: 100%;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			background-color: rgba(255, 255, 255, 0.53);
+			background-blend-mode: lighten;
+
+		}
+	</style>
 
 
-		<!-- Affichage des messages flash -->
-		{% for label, messages in app.flashes %}
-			{% for message in messages %}
-				<div class="alert alert-{{ label }} mt-3" role="alert">
-					{{ message }}
-				</div>
-			{% endfor %}
-		{% endfor %}
+</div>
 
-	</div>
-
-	<script>
-		document.addEventListener('DOMContentLoaded', function () {
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
 const form = document.querySelector('form');
 const inputs = form.querySelectorAll('input, select');
 
@@ -352,5 +358,4 @@ form.submit();
 });
 });
 });
-	</script>
-{% endblock %}
+</script>{% endblock %}

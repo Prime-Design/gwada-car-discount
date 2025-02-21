@@ -6777,3 +6777,24 @@ tarteaucitron.services.klaviyo = {
         tarteaucitron.addScript('//static.klaviyo.com/onsite/js/klaviyo.js?company_id=' + tarteaucitron.user.klaviyoCompanyId);
     }
 };
+
+tarteaucitron.services.instagram = {
+    "key": "instagram",
+    "type": "social",
+    "name": "Instagram",
+    "uri": "https://help.instagram.com/1896641480634370",
+    "needConsent": true,
+    "cookies": ['ig_did', 'mid', 'csrftoken'],
+    "js": function () {
+        "use strict";
+        if (tarteaucitron.state.instagram === true) {
+            tarteaucitron.addScript('//www.instagram.com/embed.js');
+        }
+    },
+    "fallback": function () {
+        "use strict";
+        document.querySelectorAll('.instagram-media').forEach(el => {
+            el.innerHTML = 'Instagram bloqué - Autorisez les cookies pour voir ce contenu.';
+        });
+    }
+};

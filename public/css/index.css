@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'MaPolice';
+  src: url('mapolice.woff2') format('woff2');
+  font-display: swap;
+}
 /* Styles généraux */
 body,
 html {
@@ -87,6 +92,19 @@ header {
   width: auto;
 }
 
+img {
+  width: 600px;
+  height: 400px;
+}
+
+.titre-contact{
+  color: #fbb034 !important;
+}
+#contact {
+  position: relative;
+  z-index: 9999 !important;
+}
+
 /* Barre de navigation */
 .navigation {
   text-align: center;
@@ -124,7 +142,6 @@ header {
 .navigation a:hover::after {
   width: 100%; /* Étend la ligne sur toute la largeur du lien */
 }
-
 
 
 /* Modales */
@@ -430,8 +447,9 @@ footer {
 /* Valeur (normale) */
 .table-borderless td span {
   font-size: 14px;
-  color: #777;
+  color: #222;
   text-align: center;
+  font-weight: bold; /* Mettre en gras pour améliorer la lisibilité */
 }
 
 /* Responsive pour tablettes */
@@ -467,34 +485,4 @@ footer {
   min-width: 30px;
 }
 
-/* Couleurs spécifiques */
-.co2-a {
-  background-color: #008000; /* Vert foncé */
-}
-
-.co2-b {
-  background-color: #6fcf00; /* Vert clair */
-}
-
-.co2-c {
-  background-color: #ffff00; /* Jaune */
-  color: #000; /* Texte noir pour contraste */
-}
-
-.co2-d {
-  background-color: #ffcc00; /* Jaune orangé */
-  color: #000; /* Texte noir pour contraste */
-}
-
-.co2-e {
-  background-color: #ff8000; /* Orange */
-}
-
-.co2-f {
-  background-color: #ff4000; /* Rouge clair */
-}
-
-.co2-g {
-  background-color: #ff0000; /* Rouge foncé */
-}
 

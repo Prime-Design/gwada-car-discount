@@ -1,0 +1,135 @@
+/* Styles pour la section de contact */
+.contact-container {
+    background: url('/divers/images/voiture.jpg') center/cover no-repeat;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.734);
+    background-color: rgba(255, 255, 255, 0.229);
+    background-blend-mode: lighten;
+}
+
+/* Styles généraux pour la mise en page */
+.container {
+    margin-top: 5rem;
+}
+
+h1.accueil {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Formulaire de filtre */
+form.text-white {
+    padding: 1rem 2rem;
+    margin-bottom: 2rem;
+    background: #003a4b;
+}
+
+h2.text-center {
+    margin-bottom: 1rem;
+}
+
+.form-select {
+    width: 100%;
+}
+
+/* Bouton de recherche */
+.btn-warning {
+    padding: 0.5rem 2rem;
+    font-weight: bold;
+}
+
+/* Styles pour les cartes des annonces */
+.card {
+    height: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 0 !important; /* Supprime complètement l'arrondi */
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.card-title {
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+
+.text-muted {
+    font-size: 0.875rem;
+}
+
+.co2-badge {
+    font-weight: bold;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+.co2-a { background-color: #006400; color: #ffffff; } /* Vert foncé, texte blanc */
+.co2-b { background-color: #556b2f; color: #ffffff; } /* Vert olive, texte blanc */
+.co2-c { background-color: #ffff00; color: #000000; } /* Jaune, texte noir */
+.co2-d { background-color: #ff8c00; color: #000000; } /* Orange foncé, texte noir */
+.co2-e { background-color: #8b0000; color: #ffffff; } /* Rouge foncé, texte blanc */
+
+/* Carrousel */
+.carousel-item img {
+    height: 250px;
+    object-fit: cover;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+}
+
+/* Bouton équipements */
+.btn-sm {
+    font-size: 0.875rem;
+}
+
+/* Liste des équipements */
+.list-group-item {
+    display: flex;
+    align-items: center;
+    border-left: 4px solid #ffc107;
+    padding: 0.5rem;
+}
+
+.text-secondary {
+    font-size: 0.875rem;
+}
+
+/* Pagination */
+.pagination {
+    margin-top: 2rem;
+}
+
+.page-link {
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+}
+
+.bg-warning {
+    background-color: #ffc107 !important;
+    color: black !important;
+}
+
+.bg-primary {
+    background-color: #007bff !important;
+    color: white !important;
+}
+
+/* Messages Flash */
+.alert {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+button {
+    min-width: 48px;
+    min-height: 48px;
+    padding: 10px;
+    border-radius: 8px;
+}
