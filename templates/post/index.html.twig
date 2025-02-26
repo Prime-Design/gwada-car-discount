@@ -87,7 +87,7 @@
 										{% if attribute(annonce, imageField) %}
 											<div class="carousel-item">
 												<a href="{{ asset('divers/images/' ~ attribute(annonce, imageField)) }}" data-bs-toggle="modal" data-bs-target="#imageModal{{ annonce.id }}-{{ i }}">
-													<img src="{{ asset('divers/images/' ~ attribute(annonce, imageField)) }}" class="d-block w-100" alt="Image secondaire {{ i }}" style="height: 250px; object-fit: cover;" loading="lazy">
+													<img src="{{ asset('divers/images/' ~ attribute(annonce, imageField)) }}" class="d-block " alt="Image secondaire {{ i }}" style="height: 250px; object-fit: cover;" loading="lazy">
 												</a>
 											</div>
 										{% endif %}

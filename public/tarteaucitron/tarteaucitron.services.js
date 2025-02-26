@@ -6778,23 +6778,20 @@ tarteaucitron.services.klaviyo = {
     }
 };
 
-tarteaucitron.services.instagram = {
-    "key": "instagram",
-    "type": "social",
-    "name": "Instagram",
-    "uri": "https://help.instagram.com/1896641480634370",
-    "needConsent": true,
-    "cookies": ['ig_did', 'mid', 'csrftoken'],
+tarteaucitron.services.googleanalytics = {
+    "key": "googleanalytics",
+    "type": "analytic",
+    "name": "Google Analytics",
+    "uri": "https://policies.google.com/privacy",
+    "needConsent": true,  // S'assurer que le consentement est nécessaire
+    "cookies": [],
     "js": function () {
         "use strict";
-        if (tarteaucitron.state.instagram === true) {
-            tarteaucitron.addScript('//www.instagram.com/embed.js');
-        }
-    },
-    "fallback": function () {
-        "use strict";
-        document.querySelectorAll('.instagram-media').forEach(el => {
-            el.innerHTML = 'Instagram bloqué - Autorisez les cookies pour voir ce contenu.';
+        tarteaucitron.addScript('https://www.googletagmanager.com/gtag/js?id=UA-XXXXXX-Y', '', function() {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-XXXXXX-Y', { 'anonymize_ip': true });
         });
     }
 };

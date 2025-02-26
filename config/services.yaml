@@ -2,6 +2,7 @@
 parameters:
     app.jwtsecret: '%env(APP_JWTSECRET)%'
     upload_directory: '%kernel.project_dir%/public/divers/images'
+    google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
 
 services:
     # Définition explicite de JWTService

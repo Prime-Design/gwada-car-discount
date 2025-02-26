@@ -452,10 +452,26 @@ footer {
   font-weight: bold; /* Mettre en gras pour améliorer la lisibilité */
 }
 
+.btn-warning{
+  padding: 0.5rem 2rem;
+  font-weight: bold;
+}
+
+/* Responsive pour tablettes (iPad) */
+@media (max-width: 1024px) {
+  .table-borderless tbody tr {
+    grid-template-columns: 1fr; /* 1 colonne sur les smartphones */
+}
+
+.table-borderless td {
+    font-size: 12px;
+}
+}
+
 /* Responsive pour tablettes */
 @media (max-width: 768px) {
   .table-borderless tbody tr {
-      grid-template-columns: repeat(2, 1fr); /* 2 colonnes sur les tablettes */
+      grid-template-columns: repeat(1, 1fr); /* 2 colonnes sur les tablettes */
   }
 
   .table-borderless td {
@@ -484,5 +500,229 @@ footer {
   text-align: center;
   min-width: 30px;
 }
+
+
+
+/* Amélioration de la compatibilité avec toutes les tailles de tablettes */
+
+/* Styles généraux */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Container principal */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Navigation */
+.navigation {
+  text-align: center;
+  background-color: #003a4b;
+  padding: 10px;
+}
+
+.navigation a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: bold;
+}
+
+/* Formulaire de filtre */
+form.text-white {
+  background: #003a4b;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+}
+
+/* Styles des cartes */
+.card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+
+
+/* Responsive Design pour tablettes */
+@media (max-width: 1024px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .navigation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .navigation a {
+    font-size: 16px;
+    margin: 5px;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .form-select, .form-control {
+    font-size: 14px;
+  }
+ /* Amélioration de la compatibilité avec toutes les tailles de tablettes */
+
+/* Styles généraux */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Container principal */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Navigation */
+.navigation {
+  text-align: center;
+  background-color: #003a4b;
+  padding: 10px;
+}
+
+.navigation a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: bold;
+}
+
+/* Formulaire de filtre */
+form.text-white {
+  background: #003a4b;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+}
+
+/* Styles des cartes */
+.card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Boutons */
+.btn-warning {
+  font-weight: bold;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+/* Responsive Design pour tablettes */
+@media (max-width: 1024px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .navigation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .navigation a {
+    font-size: 16px;
+    margin: 5px;
+  }
+
+  .card {
+    width: 100%;
+  }
+  .card img {
+    object-fit: cover;
+    aspect-ratio: 16/9;
+    max-height: 250px;
+  }
+
+  .form-select, .form-control {
+    font-size: 14px;
+  }
+
+  .btn-warning {
+    padding: 0.3rem 1rem;
+    font-size: 14px;
+    max-width: 60%;
+  }
+}
+
+/* Responsive pour petits écrans et tablettes compactes */
+@media (max-width: 768px) {
+  .container {
+    padding: 5px;
+  }
+  
+  .navigation {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navigation a {
+    display: block;
+    margin: 5px 0;
+  }
+  
+  .card {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .form-select, .form-control {
+    width: 100%;
+  }
+
+  .btn-warning {
+    padding: 0.3rem 1rem;
+    font-size: 12px;
+  }
+}
+
+/* Responsive pour smartphones */
+@media (max-width: 480px) {
+  .navigation a {
+    font-size: 14px;
+  }
+  
+  .btn-warning {
+    padding: 0.3rem 1.5rem;
+    font-size: 14px;
+  }
+}
+
+}
+
+
 
 

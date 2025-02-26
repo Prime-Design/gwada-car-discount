@@ -37,23 +37,23 @@
 		<script src="{{ asset('tarteaucitron/tarteaucitron.js') }}"></script>
 		<script type="text/javascript">
 			tarteaucitron.init({
-"privacyUrl": "", // URL de ta politique de confidentialité (optionnel)
+"privacyUrl": "",
 "hashtag": "#tarteaucitron",
 "cookieName": "tarteaucitron",
-"highPrivacy": true, // Active la gestion stricte du consentement
-"orientation": "bottom", // Position de la bannière
-"showAlertSmall": false, // Afficher une icône discrète après fermeture
-"cookieslist": true, // Afficher la liste des cookies
-"AcceptAllCta": true, // Afficher le bouton "Tout accepter"
-"DenyAllCta": true, // Afficher le bouton "Tout refuser"
-"mandatory": true // Oblige l'utilisateur à faire un choix
+"highPrivacy": true,
+"orientation": "bottom",
+"showAlertSmall": false,
+"cookieslist": true,
+"AcceptAllCta": true,
+"DenyAllCta": true,
+"mandatory": true
 });
 
-setTimeout(function () {
-if (document.getElementById('tarteaucitronAlertBig')) {
-document.getElementById('tarteaucitronAlertBig').style.display = 'block';
+tarteaucitron.job = tarteaucitron.job || [];
+
+if (tarteaucitron.state['googleanalytics'] === true) {
+tarteaucitron.job.push('googleanalytics');
 }
-}, 1000);
 		</script>
 
 
